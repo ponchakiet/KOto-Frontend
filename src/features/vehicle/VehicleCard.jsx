@@ -5,29 +5,42 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Button from "../../ui/Button";
 import { CiHeart } from "react-icons/ci";
+import {
+  formatVietnamMoney,
+  getTimeDifferenceFromNow,
+} from "../../utils/helper";
+import { useNavigate } from "react-router-dom";
 
 function VehicleCard({ vehicle }) {
-  const { title, properties, price, location, createdAt, image } = vehicle;
+  const { id, title, properties, createdAt, vehicleDetail } = vehicle;
+  const navigate = useNavigate();
   return (
     <Card
+      onClick={() => navigate(`/posts/${id}`)}
       className="mx-3 first:ml-0 last:mr-0 cursor-pointer hover:scale-105 transform transition duration-500"
-      sx={{ maxWidth: 345 }}
+      sx={{ maxWidth: 250 }}
     >
       <CardMedia
         component="img"
-        alt="green iguana"
-        height="140"
-        image={image}
+        alt={title}
+        sx={{ height: 169, width: 250, objectFit: "fit" }}
+        image={vehicleDetail?.contents[0].url}
       />
       <CardContent>
         <Typography
-          className="line-clamp-2 "
-          sx={{ fontSize: "16px", fontWeight: "bold" }}
+          className="line-clamp-2 overflow-hidden"
+          sx={{
+            fontSize: "16px",
+            fontWeight: "bold",
+            lineHeight: "1.5rem",
+            height: "3rem",
+          }}
           gutterBottom
           component="div"
         >
           {title}
         </Typography>
+
         <Typography variant="body1" sx={{ fontSize: "15px" }}>
           {properties}
         </Typography>
@@ -36,27 +49,34 @@ function VehicleCard({ vehicle }) {
           variant="body1"
           sx={{ color: "text.secondary" }}
         >
-          <p className="font-bold  text-2xl">
-            <span className="mr-2 text-red-500">{price}</span>
-            <span className="mx-2">11tr/m2</span>
-            <span className="mx-2">175m2</span>
-          </p>
+          <span className="font-bold  text-2xl">
+            <span className="mr-2 text-red-500">{formatVietnamMoney(vehicleDetail.price)}</span>
+            <span className="mx-2">Năm {vehicleDetail.manufactureYear}</span>
+          </span>
         </Typography>
-        <Typography
-          className="flex"
-          variant="body1"
-          sx={{ marginTop: "10px", color: "text.secondary" }}
-        >
+        <div className="flex items-start justify-between mt-2">
           <div>
-            <p className="font-bold text-2xl">{location}</p>
-            <p className="font-bold text-2xl">{createdAt}</p>
+            <Typography
+              variant="body1"
+              sx={{
+                fontWeight: "bold",
+                lineHeight: "1.5rem",
+                height: "3rem",
+              }}
+              className="font-bold text-2xl"
+            >
+              {`${vehicleDetail.address}, ${vehicleDetail.ward}, ${vehicleDetail.province}`}
+            </Typography>
+            <Typography variant="body2" className="font-bold text-2xl">
+              {getTimeDifferenceFromNow(createdAt)}
+            </Typography>
           </div>
-          <CardActions className="ml-auto">
+          <CardActions>
             <Button variant="secondary">
               <CiHeart size={19} fill="black" />
             </Button>
           </CardActions>
-        </Typography>
+        </div>
       </CardContent>
     </Card>
   );

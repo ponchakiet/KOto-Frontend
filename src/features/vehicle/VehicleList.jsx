@@ -6,7 +6,7 @@ function VehicleList({ data }) {
     <div>
       <div className="flex border-t-gray-200 border-t-2 pt-8">
         {data.map((item) => (
-          <VehicleCard vehicle={item} />
+          <VehicleCard key={item.id} vehicle={item} />
         ))}
       </div>
       <div className="py-5 flex justify-center">

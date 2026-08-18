@@ -117,7 +117,7 @@ export default function Footer() {
         <div className="flex items-center space-x-2 text-gray-400">
           <span>English</span>
         </div>
-        <p className="text-gray-400 mt-4 md:mt-0">© 2025 TLand, Inc.</p>
+        <p className="text-gray-400 mt-4 md:mt-0">© 2026 KOto, Inc.</p>
         <button className="text-gray-400 underline hover:text-white mt-4 md:mt-0">
           Cookie settings
         </button>

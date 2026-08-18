@@ -1,7 +1,7 @@
 function Section({ children }) {
   return (
     <section
-      className={`bg-white rounded-lg mb-10 shadow-md border border-gray-200`}
+      className={`bg-white rounded-lg text-2xl mb-10 shadow-md border border-gray-200`}
     >
       {children}
     </section>
