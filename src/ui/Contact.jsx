@@ -21,7 +21,7 @@ function Contact() {
         <p className="text-gray-600">• 1 tin đăng • 7 năm trên KOto</p>
         <div className="mt-5">
           <Button variant="primary" className="w-full">
-            ☎️ 0383796****
+            ☎️ 038379****
           </Button>
           <Button className="w-full" variant="secondary">
             💬 Chat trực tiếp

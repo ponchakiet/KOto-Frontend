@@ -24,7 +24,7 @@ const properties = {
 };
 
 function PostDetail({ post }) {
-  const { id, createdAt, title, vehicleDetail } = post;
+  const { createdAt, title, vehicleDetail } = post;
   return (
     <Section>
       <div className="p-5 text-2xl">
@@ -65,7 +65,7 @@ function PostDetail({ post }) {
         <h1 className="font-semibold text-3xl mb-2">Mô tả chi tiết</h1>
         <div className="py-4 px-4 my-4 flex bg-gray-200 w-fit items-center">
           <h3 className="font-semibold">SĐT Liên hệ: </h3>
-          <p className="ml-4">0935 39 xxxx</p>
+          <p className="ml-4">0383 79 xxxx</p>
         </div>
         {/* {vehicleDetail.description
           .split("\n")
