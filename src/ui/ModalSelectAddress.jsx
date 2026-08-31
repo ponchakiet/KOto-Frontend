@@ -7,6 +7,9 @@ import Button from "./Button";
 import useGetProvince from "../features/vehicle/useGetProvince";
 import SyncLoader from "react-spinners/SyncLoader";
 import useGetWards from "../features/vehicle/useGetWards";
+import { Controller, useForm } from "react-hook-form";
+import ErrorMessage from "./ErrorMessage";
+import Select from "react-select";
 
 const style = {
   position: "absolute",
@@ -21,51 +24,61 @@ const style = {
   overflow: "hidden",
   minHeight: "330px",
 };
-function ModalSelectAddress() {
+function ModalSelectAddress({ address, setAddress }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [provinceCode, setProvinceCode] = useState(null);
-  const [address, setAddress] = useState({
-    province: null,
-    ward: null,
-    addresDetail: "",
+  const {
+    register,
+    control,
+    getValues,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      province: address?.province || "",
+      ward: address?.ward || "",
+      detail: address?.addresDetail || "",
+    },
   });
   const { isLoading, provinces } = useGetProvince();
   const { isLoading: isLoadingWard, wards } = useGetWards(provinceCode);
 
-  function handleUpdateProvince(e) {
-    const value = e.target.value;
-    const province = provinces.find((p) => p.name === value);
-    setAddress((prev) => ({
-      ...prev,
-      ["province"]: value,
-    }));
-    setProvinceCode(province.code);
+  function onSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const address = {
+      province: getValues().province,
+      ward: getValues().ward,
+      detail: getValues().detail,
+    };
+    setAddress(address);
+    setOpen(false);
   }
-  function handleUpdateWard(e) {
-    const value = e.target.value;
-    setAddress((prev) => ({
-      ...prev,
-      ["ward"]: value,
-    }));
-  }
-  function handleUpdateDetail(e) {
-    const value = e.target.value;
-    setAddress((prev) => ({
-      ...prev,
-      ["addresDetail"]: value,
-    }));
-  }
+
+  const provinceOption = provinces?.map((p) => ({
+    value: p.code,
+    label: p.name,
+  }));
+  const wardsOption = wards?.map((p) => ({
+    value: p.code,
+    label: p.name,
+  }));
 
   return (
     <div>
       <div className="relative">
         <div
           onClick={handleOpen}
-          className="text-2xl px-5 py-5 rounded-md border-2 w-full border-gray-300"
+          className="text-2xl px-5 py-5 rounded-md w-full border"
         >
-          <p>Địa chỉ</p>
+          <p>
+            {address?.detail
+              ? `${address.detail}, ${address.ward}, ${address.province}`
+              : "Địa chỉ"}
+          </p>
         </div>
         <span className="absolute top-[30%]  right-3 text-5xl">
           <MdArrowDropDown />
@@ -87,7 +100,10 @@ function ModalSelectAddress() {
             {isLoading || isLoadingWard ? (
               <SyncLoader />
             ) : (
-              <form className="px-8 py-5 w-full">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="px-8 py-5 w-full"
+              >
                 <div className="my-5">
                   <label
                     htmlFor="province"
@@ -95,21 +111,37 @@ function ModalSelectAddress() {
                   >
                     Chọn tỉnh, thành phố
                   </label>
-                  <select
-                    id="province"
+                  <Controller
                     name="province"
-                    value={address.province}
-                    onChange={(e) => handleUpdateProvince(e)}
-                    className="w-full p-6 border border-gray-300 rounded text-2xl"
-                  >
-                    <option value="">Chọn tỉnh, thành phố</option>
-                    {provinces.map((item) => (
-                      <option key={item.code} value={item.name}>
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
+                    control={control}
+                    rules={{ required: "Vui lòng chọn tỉnh" }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <Select
+                          {...field}
+                          options={provinceOption}
+                          placeholder="Toàn quốc"
+                          className="w-full rounded text-2xl"
+                          classNamePrefix="react-select"
+                          value={provinceOption.find(
+                            (opt) => opt.label === field.value,
+                          )}
+                          onChange={(val) => {
+                            field.onChange(val);
+                            setProvinceCode(val.value);
+                            setValue("province", val.label);
+                          }}
+                        />
+                        {fieldState.error && (
+                          <p className="text-red-500 text-sm">
+                            {fieldState.error.message}
+                          </p>
+                        )}
+                      </>
+                    )}
+                  />
                 </div>
+
                 <div className="my-5">
                   <label
                     htmlFor="ward"
@@ -117,21 +149,37 @@ function ModalSelectAddress() {
                   >
                     Chọn phường, xã
                   </label>
-                  <select
-                    id="ward"
+                  <Controller
                     name="ward"
-                    value={address.ward}
-                    onChange={(e) => handleUpdateWard(e)}
-                    className="w-full p-6 border border-gray-300 rounded text-2xl"
-                  >
-                    <option value="">Chọn phường, xã</option>
-                    {wards?.map((item) => (
-                      <option
-                        value={`${item.type} ${item.name}`}
-                      >{`${item.type} ${item.name}`}</option>
-                    ))}
-                  </select>
+                    control={control}
+                    rules={{ required: "Vui lòng chọn phường/xã" }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <Select
+                          {...field}
+                          options={wardsOption}
+                          placeholder="Phường/Xã"
+                          className="w-full rounded text-2xl"
+                          classNamePrefix="react-select"
+                          value={wardsOption?.find(
+                            (opt) => opt.label === field.value,
+                          )}
+                          onChange={(val) => {
+                            field.onChange(val);
+                            setValue("ward", val.label);
+                          }}
+                          isDisabled={!provinceCode}
+                        />
+                        {fieldState.error && (
+                          <p className="text-red-500 text-sm">
+                            {fieldState.error.message}
+                          </p>
+                        )}
+                      </>
+                    )}
+                  />
                 </div>
+
                 <div className="my-5">
                   <label
                     htmlFor="detail"
@@ -141,14 +189,22 @@ function ModalSelectAddress() {
                   </label>
                   <input
                     id="detail"
-                    name="detail"
-                    value={address.addresDetail}
-                    onChange={(e) => handleUpdateDetail(e)}
+                    {...register("detail", {
+                      required: "Vui lòng nhập số nhà và tên đường",
+                    })}
                     className="w-full p-6 border border-gray-300 rounded text-2xl"
                     placeholder="Số nhà, tên đường"
                   />
+                  {errors.detail && (
+                    <ErrorMessage message={errors.detail.message} />
+                  )}
                 </div>
-                <Button type="submit" variant="primary" className="w-full">
+
+                <Button
+                  onClick={(e) => onSubmit(e)}
+                  variant="primary"
+                  className="w-full"
+                >
                   Xong
                 </Button>
               </form>

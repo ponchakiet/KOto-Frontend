@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { MdArrowDropDown } from "react-icons/md";
@@ -20,7 +19,7 @@ const style = {
   overflow: "hidden",
   minHeight: "330px",
 };
-function ModalCreate({ category, setCategory }) {
+function ModalSelectCategory({ category, setCategory }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -35,7 +34,7 @@ function ModalCreate({ category, setCategory }) {
       <div className="relative">
         <div
           onClick={handleOpen}
-          className="text-2xl px-5 py-5 rounded-md border-2 w-full border-gray-300"
+          className="text-2xl px-5 py-5 rounded-md border w-ful"
         >
           <p className="w-full h-9 mt-3 truncate">{category?.name}</p>
         </div>
@@ -83,4 +82,4 @@ function ModalCreate({ category, setCategory }) {
   );
 }
 
-export default ModalCreate;
+export default ModalSelectCategory;

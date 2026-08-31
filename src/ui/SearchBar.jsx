@@ -1,21 +1,43 @@
 import { FaSearch } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import useGetProvince from "../features/vehicle/useGetProvince";
+import Select from "react-select";
 
 function SearchBar() {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams("");
+  const [searchParams] = useSearchParams("");
+  const [kw, setKw] = useState(searchParams.get("keyword") || "");
+  const { isLoading, provinces } = useGetProvince();
 
-  function search(e) {
+  function handleOnKeyDown(e) {
     if (e.key === "Enter") {
-      navigate(`/courses?keyword=${encodeURIComponent(e.target.value)}`);
+      search(e);
     }
+  }
+
+  function search() {
+    navigate(`/search?keyword=${encodeURIComponent(kw)}&type=SELL`);
+  }
+
+  const locOption = provinces?.map((p) => ({
+    value: p.name,
+    label: p.name,
+  }));
+  const selectedItem = searchParams.get("province") || null;
+  const option = locOption?.find((o) => o.value === selectedItem);
+
+  function handleOnChangeProvince(option) {
+    navigate(`/search?province=${encodeURIComponent(option.value)}&type=SELL`);
   }
 
   return (
     <div className="flex-[0.9] mx-4">
       <div className="relative w-full">
         <input
-          onKeyDown={search}
+          onKeyDown={handleOnKeyDown}
+          value={kw}
+          onChange={(e) => setKw(e.target.value)}
           type="text"
           placeholder="Search for anything"
           className="bg-gray-200 text-black w-full p-5 pr-24 border rounded-lg border-amber-50 focus:outline-none"
@@ -26,6 +48,16 @@ function SearchBar() {
         >
           <FaSearch />
         </button>
+        <div className="absolute right-25 top-1/2 -translate-y-1/2 cursor-pointer text-black z-50 px-8 py-3 rounded-md transition">
+          <Select
+            value={option}
+            onChange={handleOnChangeProvince}
+            className="text-2xl rounded-2xl w-50"
+            classNamePrefix="react-select"
+            placeholder="Toàn quốc"
+            options={locOption}
+          />
+        </div>
       </div>
     </div>
   );

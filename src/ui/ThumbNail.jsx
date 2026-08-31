@@ -1,28 +1,35 @@
 import { useState } from "react";
 
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import MyCarousel from "../../ui/MyCarousel";
+import MyCarousel from "./MyCarousel";
 
-function PostThumb({ images }) {
+function Thumbnail({ images }) {
   const [index, setIndex] = useState(0);
   function handleOnMouseEnter(e) {
     setIndex(parseInt(e.target.id));
   }
   function handleOnClickPrev() {
-    setIndex((index) => (index - 1) % images.length);
+    setIndex((index) => (index - 1 < 0 ? images.length - 1 : index - 1));
   }
   function handleOnClickNext() {
     setIndex((index) => (index + 1) % images.length);
   }
-
   return (
-    <div className="mb-4">
+    <div className="mb-4 bg-white p-4 rounded-lg shadow-lg">
       <div className="overflow-hidden relative rounded-lg mb-4">
-        <img
-          src={images[index].url}
-          alt="Ô tô"
-          className="w-full h-[413px] object-cover"
-        />
+        {images[index].contentType === "video" ? (
+          <video
+            src={images[index].url}
+            controls
+            className="w-full h-[413px] object-cover"
+          />
+        ) : (
+          <img
+            src={images[index].url}
+            alt="Preview"
+            className="w-full h-[413px] object-cover"
+          />
+        )}
         {images.length > 1 && (
           <>
             <button
@@ -51,4 +58,4 @@ function PostThumb({ images }) {
   );
 }
 
-export default PostThumb;
+export default Thumbnail;

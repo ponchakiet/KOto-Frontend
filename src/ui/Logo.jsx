@@ -5,10 +5,7 @@ function Logo() {
 
   return (
     <div onClick={() => navigate("/")} className="cursor-pointer">
-      <img
-        className="w-[188px] h-[130px] object-contain"
-        src="/public/logo.png"
-      />
+      <img className="w-47 h-32.5 object-contain" src="/logo.png" />
     </div>
   );
 }

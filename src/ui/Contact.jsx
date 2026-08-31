@@ -1,27 +1,46 @@
+import { useNavigate } from "react-router-dom";
+import { getTimeDifferenceFromNow } from "../utils/helper";
 import Button from "./Button";
 import Section from "./Section";
 
-function Contact() {
+function Contact({ userInfo }) {
+  const {
+    id,
+    avtUrl,
+    firstName,
+    lastName,
+    phoneNumber,
+    createdAt,
+    lastAccess,
+  } = userInfo;
+  const fullName = `${firstName} ${lastName}`;
+  const navigate = useNavigate();
+
   return (
     <Section>
-      <div className="flex items-center p-4">
+      <div
+        onClick={() => navigate(`/user/${id}`)}
+        className="flex items-center p-4"
+      >
         <img
           className="w-24 h-24 rounded-full mr-4"
-          src="https://koto-storage.s3.ap-southeast-2.amazonaws.com/bean.png"
-          alt="User Avatar"
+          src={avtUrl}
+          alt={fullName}
         />
         <div>
-          <h3 className="font-bold">Kiệt Ô Tô</h3>
+          <h3 className="font-bold">{fullName}</h3>
           <p className="text-gray-600 text-xl font-semibold">Ô Tô</p>
         </div>
       </div>
       <div className="p-4 border-t">
-        <p className="text-gray-600">• Hoạt động 1 ngày trước</p>
+        <p className="text-gray-600">
+          {`• Hoạt động ${getTimeDifferenceFromNow(lastAccess)} trước`}
+        </p>
 
-        <p className="text-gray-600">• 1 tin đăng • 7 năm trên KOto</p>
+        <p className="text-gray-600">{`• ${getTimeDifferenceFromNow(createdAt)} trên KOto`}</p>
         <div className="mt-5">
           <Button variant="primary" className="w-full">
-            ☎️ 038379****
+            ☎️ {phoneNumber}
           </Button>
           <Button className="w-full" variant="secondary">
             💬 Chat trực tiếp

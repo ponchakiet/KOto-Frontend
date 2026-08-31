@@ -8,17 +8,19 @@ import {
 } from "react-icons/fa";
 import { FiChevronRight } from "react-icons/fi";
 import { HiOutlineBars3 } from "react-icons/hi2";
+import useGetCategories from "../features/vehicle/useGetCategories";
+import { Link } from "react-router-dom";
 
 const menu = [
   {
     label: "Mua bán",
     icon: <FaHome />,
-    subMenu: ["Ô tô mới", "Ô tô cũ"],
+    param: "SELL",
   },
   {
     label: "Cho thuê",
     icon: <FaMoneyCheckAlt />,
-    subMenu: ["Ô tô mới", "Ô tô cũ"],
+    param: "RENT",
   },
   {
     label: "Khuyến mãi",
@@ -32,15 +34,12 @@ const menu = [
     label: "Biểu đồ biến động giá",
     icon: <FaChartLine />,
   },
-  {
-    label: "Vay mua xe",
-    icon: <FaMoneyCheckAlt />,
-  },
 ];
 
 function Menu() {
   const [openMenuIndex, setOpenMenuIndex] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isLoading, categories } = useGetCategories();
 
   return (
     <div
@@ -57,11 +56,12 @@ function Menu() {
         </span>
         Danh mục
       </p>
+      
       {isMenuOpen && (
         <div
-          className="absolute z-20 mt-2 w-64 before:content-['']
-                        before:absolute before:-top-2 before:left-4 before:w-[64px] 
-                        before:border-8 before:border-transparent before:border-b-white before:z-[-1]"
+          className="absolute z-20 mt-2 w-64
+                    before:content-[''] before:absolute before:-top-2 before:left-4 before:w-16
+                    before:border-8 before:border-transparent before:border-b-white before:z-[-1]"
         >
           <ul className="bg-white shadow-lg rounded p-2 w-full">
             {menu.map((item, index) => (
@@ -70,23 +70,29 @@ function Menu() {
                 onMouseEnter={() => setOpenMenuIndex(index)}
                 className="relative group flex items-center justify-between p-2 hover:bg-gray-100 rounded cursor-pointer"
               >
-                <div className="flex items-center gap-2">
-                  {item.icon}
-                  <span>{item.label}</span>
-                </div>
+                <Link to={`/search?type=${item.param}`}>
+                  <div className="flex items-center gap-2">
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </div>
+                </Link>
+
                 {item.subMenu && <FiChevronRight className="text-gray-400" />}
-                {item.subMenu && openMenuIndex === index && (
-                  <ul className="absolute left-full top-0 ml-1 bg-white shadow-lg rounded p-2 w-56 z-10">
-                    {item.subMenu.map((sub, i) => (
-                      <li
-                        key={i}
-                        className="p-2 hover:bg-gray-100 rounded cursor-pointer"
-                      >
-                        {sub}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                {(item.label === "Mua bán" || item.label === "Cho thuê") &&
+                  openMenuIndex === index && (
+                    <ul className="absolute left-full top-0 ml-1 bg-white shadow-lg rounded p-2 w-56 z-10">
+                      {categories?.map(({ id, name }) => (
+                        <Link
+                          to={`/search?type=${item.param}&category=${id}`}
+                          key={id}
+                        >
+                          <li className="p-2 hover:bg-gray-100 rounded cursor-pointer">
+                            {name}
+                          </li>
+                        </Link>
+                      ))}
+                    </ul>
+                  )}
               </li>
             ))}
           </ul>
