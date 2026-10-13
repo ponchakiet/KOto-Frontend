@@ -19,7 +19,7 @@ function VehicleUploadImage({ vehicleId, setVehicleId, initImages = [] }) {
       uploadMedia(
         { vehicleId, file },
         {
-          onSuccess: ({ data }) => {
+          onSuccess: (data) => {
             setVehicleId(data.vehicleId);
             setImages([...images, data.url]);
           },

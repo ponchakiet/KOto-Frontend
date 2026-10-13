@@ -1,6 +1,7 @@
 import ModalSelectCategory from "../../ui/ModalSelectCategory";
 import ErrorMessage from "../../ui/ErrorMessage";
 import ModalSelectAddress from "../../ui/ModalSelectAddress";
+import VehicleFormDetail from "./VehicleFormDetail";
 
 function VehicleCreatedForm({
   register,

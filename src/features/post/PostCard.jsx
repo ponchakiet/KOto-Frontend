@@ -11,12 +11,12 @@ import {
 } from "../../utils/helper";
 import { useNavigate } from "react-router-dom";
 
-function PostCard({ vehicle }) {
-  const { id, title, properties, type, createdAt, vehicleDetail } = vehicle;
+function PostCard({ post }) {
+  const { id, title, properties, type, createdAt, price, vehicleDetail } = post;
   const navigate = useNavigate();
   return (
     <Card
-      onClick={() => navigate(`/posts/${id}`)}
+      onClick={() => navigate(`/post/${id}`)}
       className="first:ml-0 flex-1 last:mr-0 cursor-pointer hover:scale-105 transform transition duration-500"
       sx={{ maxWidth: 220 }}
     >

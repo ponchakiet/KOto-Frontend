@@ -17,3 +17,5 @@ function VehicleData() {
     </div>
   );
 }
+
+export default VehicleData;

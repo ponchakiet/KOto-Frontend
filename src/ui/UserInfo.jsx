@@ -63,7 +63,7 @@ function UserInfo() {
                   Xem xe
                 </li>
               </Link>
-              <Link to="/my-ads">
+              <Link to="/my-ads/SHOW">
                 <li className="flex items-center cursor-pointer hover:bg-gray-100 px-2 py-4 rounded">
                   <span className="mr-2">
                     <BiCar />

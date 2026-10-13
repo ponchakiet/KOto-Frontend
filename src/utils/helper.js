@@ -1,3 +1,15 @@
+export const getAccessToken = () => {
+  const token = window.localStorage.getItem("ROCP_token");
+  if (token == null) return null;
+  return JSON.parse(token);
+};
+
+export const getRefreshToken = () => {
+  const token = window.localStorage.getItem("auth_token");
+  if (token == null) return null;
+  return JSON.parse(token).refreshToken;
+};
+
 export const setLocalStorageToken = (token) => {
   window.localStorage.setItem("ROCP_token", JSON.stringify(token));
 };
@@ -39,3 +51,23 @@ export const convertDate = (date) => {
   const options = { month: "short", day: "2-digit", year: "numeric" };
   return new Intl.DateTimeFormat("en-US", options).format(iso);
 };
+
+export const formatWithDots = (number) => {
+  if (!number) return "";
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+
+export const removeDots = (formatted) => {
+  if (typeof formatted === "string") return formatted.replace(/\./g, "");
+  return formatted;
+};
+
+export function formatSearchParams(filterValue) {
+  return Object.entries(filterValue)
+    .filter(([_, value]) => value != null && value !== "")
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+    )
+    .join("&");
+}

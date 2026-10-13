@@ -6,9 +6,11 @@ import Contact from "../../ui/Contact";
 import Comment from "../../ui/Comment";
 import MapboxGeocoding from "../map/MapboxGeocoding";
 import Section from "../../ui/Section";
+import { useEffect } from "react";
 
 function PostDetailData() {
   const { isLoading, post } = useGetPost();
+
   if (isLoading) return <FullPageSpinner />;
   const { vehicleDetail, userInfo } = post;
 
@@ -20,7 +22,7 @@ function PostDetailData() {
         <Section>
           <h1 className="font-bold text-3xl p-4">Xem trên bản đồ</h1>
           <MapboxGeocoding
-            address={`${assetDetail.address}, ${assetDetail.ward}, ${assetDetail.province}`}
+            address={`${vehicleDetail.address}, ${vehicleDetail.ward}, ${vehicleDetail.province}`}
           />
         </Section>
       </div>

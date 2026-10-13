@@ -1,10 +1,10 @@
 import MiniSpinner from "../../ui/MiniSpinner";
 import VehicleList from "./PostList";
-import useGetPostsVehicle from "../vehicle/useGetPostsVehicle";
+import useGetPostsHome from "./useGetPostsHome";
 import { POST_TYPE } from "../../utils/constant";
 
 function PostForSell() {
-  const { isLoading, content, totalElements } = useGetPostsVehicle("SELL");
+  const { isLoading, content, totalElements } = useGetPostsHome("SELL");
 
   if (isLoading) return <MiniSpinner />;
 

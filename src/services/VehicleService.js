@@ -6,7 +6,9 @@ export async function getAllCategories() {
 }
 
 export async function getVehicle(vehicleId) {
-  const res = await API.get(`/vehicle-service/api/v1/vehicles/${vehicleId}`);
+  const res = await AUTH_REQUEST.get(
+    `/vehicle-service/api/v1/vehicles/${vehicleId}`,
+  );
   return res.data.data;
 }
 
@@ -18,7 +20,7 @@ export async function getVehicles({ page, size }) {
 }
 
 export async function getVehiclesDraft() {
-  const res = await AUTH_REQUEST.get(`/asset-service/api/v1/vehicles/draft`);
+  const res = await AUTH_REQUEST.get(`/vehicle-service/api/v1/vehicles/draft`);
   return res.data.data;
 }
 
@@ -27,7 +29,7 @@ export async function uploadVehicleImage(vehicleId, file) {
   formData.append("file", file);
   if (vehicleId) formData.append("vehicleId", vehicleId);
 
-  const res = await API.post(
+  const res = await AUTH_REQUEST.post(
     `/vehicle-service/api/v1/vehicles/upload`,
     formData,
     {
@@ -48,10 +50,11 @@ export async function deleteVehicle(id) {
 }
 
 export async function creatVehicle(request) {
-  const res = await AUTH_REQUEST.post(
+  console.log("request", request);
+  const res = await AUTH_REQUEST.put(
     `/vehicle-service/api/v1/vehicles`,
     request,
   );
 
-  return res.data.data;
+  return res.data;
 }

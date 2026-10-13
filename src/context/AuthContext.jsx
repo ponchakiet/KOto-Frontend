@@ -46,11 +46,15 @@ function AuthProvider({ children }) {
         authenticated,
         initialized,
         profile,
-        login: () => keycloak.login(),
-        logout: () => {
+        login: async () => await keycloak.login({
+          redirectUri: window.location.origin + "/",
+        }),
+        logout: async () => {
           localStorage.removeItem("token");
           localStorage.removeItem("refreshToken");
-          keycloak.logout();
+          await keycloak.logout({
+            redirectUri: window.location.origin + "/",
+          });
         },
       }}
     >

@@ -17,7 +17,7 @@ function Thumbnail({ images }) {
   return (
     <div className="mb-4 bg-white p-4 rounded-lg shadow-lg">
       <div className="overflow-hidden relative rounded-lg mb-4">
-        {images[index].contentType === "video" ? (
+        {images[index].type === "VIDEO" ? (
           <video
             src={images[index].url}
             controls

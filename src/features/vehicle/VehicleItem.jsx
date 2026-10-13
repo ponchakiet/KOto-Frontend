@@ -40,7 +40,7 @@ function VehicleItem({ vehicle }) {
               Năm sản xuất: {manufacturYear}
             </p>
             <p className="text-xl text-gray-600">
-              Giá: {formatVietnamMoney(price)} đồng
+              Giá: {formatVietnamMoney(price)}
             </p>
           </div>
         </div>

@@ -38,7 +38,7 @@ function VehicleUploadVideo({
     uploadMedia(
       { vehicleId, file },
       {
-        onSuccess: ({ data }) => {
+        onSuccess: (data) => {
           const { vehicleId, url } = data;
           setVehicleId(vehicleId);
           generateThumbnail(url);

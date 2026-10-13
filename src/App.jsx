@@ -11,6 +11,14 @@ import ProtectedRoute from "./ui/ProtectedRoute";
 import VehicleList from "./features/vehicle/VehicleList";
 import VehicleCreatedPage from "./pages/VehicleCreatedPage";
 import VehicleCreated from "./features/vehicle/VehicleCreated";
+import PostCreated from "./features/post/PostCreated";
+import PostManagement from "./features/post/PostManagement";
+import PostUpdateFormData from "./features/post/PostUpdateFormData";
+import UserProfileData from "./features/auth/UserProfileData";
+import SignIn from "./features/auth/sign-in/SignInForm";
+import SignUp from "./features/auth/sign-up/SignUp";
+import RealEstatePage from "./features/landing/RealEstatePage";
+import Search from "./features/search/Search";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +37,8 @@ function App() {
           <Routes>
             <Route element={<AppLayout />}>
               <Route index element={<HomePage />} />
+              <Route path="user/:userId" element={<RealEstatePage />} />
+              <Route path="search" element={<Search />} />
               <Route path="post/:postId" element={<PostDetailPage />} />
               <Route path="vehicle/:vehicleId" element={<VehiclePage />} />
               <Route
@@ -39,7 +49,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="create-vehicle"
                 element={
@@ -48,7 +57,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="create-vehicle/draft/:draftId"
                 element={
@@ -57,9 +65,37 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="asset/update/:assetId" element={<VehicleCreated />} />
+              <Route
+                path="vehicle/update/:vehicleId"
+                element={<VehicleCreated />}
+              />
               <Route path="create-vehicle/new" element={<VehicleCreated />} />
-              
+              <Route
+                path="create-post"
+                element={
+                  <ProtectedRoute>
+                    <PostCreated />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="my-ads" element={<PostManagement />} />
+              <Route path="my-ads/:status" element={<PostManagement />} />
+              <Route
+                path="my-ads/update/:postId"
+                element={<PostUpdateFormData />}
+              />
+              <Route
+                path="user/setting/"
+                element={
+                  <ProtectedRoute>
+                    <UserProfileData />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route path="auth/login" element={<SignIn />} />
+
+              <Route path="auth/register" element={<SignUp />} />
             </Route>
           </Routes>
         </BrowserRouter>

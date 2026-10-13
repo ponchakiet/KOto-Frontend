@@ -16,7 +16,7 @@ export const POST_TYPE = {
   RENT: "RENT",
 };
 
-export const VEHICLE_CONDITION = ["Xe mới", "Xe đã qua sử dụng"];
+export const VEHICLE_CONDITION = ["Xe mới", "Xe đã dùng"];
 
 export const PROPERTY_FEATURES = [
   "Xe một chủ từ đầu",
@@ -29,30 +29,45 @@ export const PROPERTY_FEATURES = [
   "Đã độ thêm phụ kiện",
 ];
 
-export const HOUSE_TYPE = [
-  "Nhà mặt phố, mặt tiền",
-  "Nhà ngõ, hẻm",
-  "Nhà biệt thự",
-  "Nhà phố liền kề",
+export const CAR_TYPE = {
+  "Xe con": [
+    "Sedan",
+    "Hatchback",
+    "SUV",
+    "Crossover",
+    "MPV",
+    "Coupe",
+    "Convertible",
+  ],
+  "Xe bán tải": ["Pickup"],
+  "Xe van": ["Van", "Minivan"],
+};
+
+export const COLOR = [
+  "Trắng",
+  "Đen",
+  "Bạc",
+  "Xám",
+  "Đỏ",
+  "Xanh",
+  "Nâu",
+  "Vàng",
+  "Cam",
+  "Khác",
 ];
 
-export const DIRECT_ASSET = [
-  "Bắc",
-  "Đông Bắc",
-  "Đông",
-  "Đông Nam",
-  "Nam",
-  "Tây Nam",
-  "Tây",
-  "Tây Bắc",
+export const INTERIOR_COLOR = [
+  "Đen",
+  "Be",
+  "Nâu",
+  "Xám",
+  "Trắng",
+  "Đỏ",
+  "Xanh",
+  "Khác",
 ];
 
-export const LEGAL_INFO = [
-  "Giấy tờ đầy đủ",
-  "Đã sang tên",
-  "Chưa sang tên",
-  "Đang chờ hoàn tất giấy tờ",
-];
+export const ORIGIN = ["Lắp ráp trong nước", "Nhập khẩu"];
 
 export const POST_STATUS = {
   WAITING_PAYMENT: "Cần thanh toán",
@@ -84,12 +99,7 @@ export const PROPERTIES = {
     icon: MdCarRepair,
     label: "Tình trạng xe",
     params: "condition",
-    items: [
-      "Xe mới",
-      "Xe đã qua sử dụng",
-      "Xe đã sửa chữa",
-      "Xe đã từng tai nạn",
-    ],
+    items: ["Xe mới", "Xe đã qua sử dụng"],
   },
   color: {
     icon: IoColorPaletteOutline,
@@ -108,21 +118,22 @@ export const PROPERTIES = {
       "Khác",
     ],
   },
-  type: {
+  carType: {
     icon: FaCar,
     label: "Kiểu dáng",
     params: "type",
-    items: {
-      car: [
-        "Sedan",
-        "SUV",
-        "Hatchback",
-        "MPV",
-        "Pickup",
-        "Coupe",
-        "Convertible",
-      ],
-    },
+    items: [
+      "Sedan",
+      "Hatchback",
+      "SUV",
+      "Crossover",
+      "MPV",
+      "Coupe",
+      "Convertible",
+      "Pickup",
+      "Van",
+      "Minivan",
+    ],
   },
   engine: {
     icon: FaCogs,
@@ -141,6 +152,21 @@ export const PROPERTIES = {
     items: ["Lắp ráp trong nước", "Nhập khẩu"],
     params: "origin",
   },
+};
+
+export const FILTER_NAME = {
+  seats: "Số chỗ ngồi",
+  interiorColor: "Màu nội thất",
+  mileage: "Số km đã đi",
+  carType: "Kiểu dáng xe",
+  doors: "Số của",
+  condition: "Tình trạng xe",
+  color: "Màu ngoại thất",
+  minPrice: "Giá từ",
+  maxPrice: "Đến",
+  ward: "Phường",
+  engine: "Động cơ",
+  origin: "Xuất xứ"
 };
 
 export const FILTER_PRICE_SELL = [

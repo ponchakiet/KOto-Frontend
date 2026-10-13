@@ -1,10 +1,10 @@
 import VehicleList from "./PostList";
 import MiniSpinner from "../../ui/MiniSpinner";
-import useGetPostsVehicle from "../vehicle/useGetPostsVehicle";
+import useGetPostsHome from "./useGetPostsHome";
 import { POST_TYPE } from "../../utils/constant";
 
 function PostForRent() {
-  const { isLoading, content, totalElements } = useGetPostsVehicle("RENT");
+  const { isLoading, content, totalElements } = useGetPostsHome("RENT");
   if (isLoading) return <MiniSpinner />;
 
   return (

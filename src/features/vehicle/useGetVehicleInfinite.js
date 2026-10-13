@@ -20,7 +20,7 @@ function useGetVehicleInfinite() {
     isFetchingNextPage,
     fetchNextPage,
     hasMore: hasNextPage,
-    assets,
+    vehicles,
     totalElements,
   };
 }

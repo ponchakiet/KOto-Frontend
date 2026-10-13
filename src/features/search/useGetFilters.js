@@ -1,0 +1,28 @@
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
+import { getSearchFilter } from "../../services/SearchService";
+import { formatSearchParams } from "../../utils/helper";
+
+function useGetFilters() {
+  const [searchParams] = useSearchParams();
+  const filterValue = {
+    keyword: searchParams.get("keyword") || "",
+    category: searchParams.get("category") || "",
+    type: searchParams.get("type") || "",
+    minPrice: searchParams.get("minPrice") || "",
+    maxPrice: searchParams.get("maxPrice") || "",
+    province: searchParams.get("province") || "",
+    ward: searchParams.get("ward") || "",
+  };
+
+  const filterParams = formatSearchParams(filterValue);
+
+  const { isLoading, data: filters } = useQuery({
+    queryKey: ["filters", filterParams],
+    queryFn: () => getSearchFilter({ params: filterParams }),
+  });
+
+  return { isLoading, filters };
+}
+
+export default useGetFilters;

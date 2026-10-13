@@ -35,7 +35,7 @@ function VehicleDetail({ vehicle }) {
         </div>
         <div className="text-3xl font-bold">
           <p>Năm sản xuất: {manufactureYear}</p>
-          <p>Giá {formatVietnamMoney(price)} đồng</p>
+          <p>Giá: {formatVietnamMoney(price)}</p>
         </div>
         <ul className="text-2xl">
           {Object.entries(properties).map(([key, value]) => {

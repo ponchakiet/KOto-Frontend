@@ -24,7 +24,7 @@ function Contact({ userInfo }) {
       >
         <img
           className="w-24 h-24 rounded-full mr-4"
-          src={avtUrl}
+          src={avtUrl || "/public/default-avt.png"}
           alt={fullName}
         />
         <div>

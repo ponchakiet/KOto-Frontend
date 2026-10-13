@@ -7,8 +7,8 @@ import DraftItem from "./DraftItem";
 function VehicleCreateData() {
   const { isLoading, drafts } = useGetVehicleDraft();
   if (isLoading) return <MiniSpinner />;
-  if (!drafts.length) {
-    return <Navigate to="/create-vehicle/new" />;
+  if (!drafts?.length) {
+    return <Navigate to="/create-vehicle/new" replace />;
   }
   return (
     <div className="space-y-5">

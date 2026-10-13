@@ -7,8 +7,10 @@ import useCreateComment from "../features/post/useCreateComment";
 import toast from "react-hot-toast";
 import { getTimeDifferenceFromNow } from "../utils/helper";
 import PaginationStack from "./PaginationStack";
+import { useAuth } from "../context/AuthContext";
 
 function Comment() {
+  const { authenticated } = useAuth();
   const { postId } = useParams();
   const { isLoading, comments, totalPages, page } = useGetComments();
   const [comment, setComment] = useState("");
@@ -16,6 +18,11 @@ function Comment() {
   if (isLoading) return null;
 
   function handleCreateComment() {
+    if (!authenticated) {
+      toast.error("Vui lòng đăng nhập để bình luận");
+      return;
+    }
+
     if (!comment || comment.trim() === "") {
       toast.error("Vui lòng nhập bình luận để gửi");
       return;
@@ -44,7 +51,7 @@ function Comment() {
               <li>
                 <div className="flex space-x-2 ">
                   <img
-                    src={c.userInfo.avtUrl}
+                    src={c.userInfo.avtUrl || "/public/default-avt.png"}
                     alt={`${c.userInfo.firstName} ${c.userInfo.lastName}`}
                     className="w-8 h-8 rounded-full object-cover"
                   />

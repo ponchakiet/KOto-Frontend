@@ -6,6 +6,7 @@ import Button from "../../ui/Button";
 import Section from "../../ui/Section";
 import { Box, Modal } from "@mui/material";
 import ConfirmDelete from "../../ui/ConfirmDelete";
+import { useState } from "react";
 
 const style = {
   position: "absolute",
@@ -60,15 +61,21 @@ function MenuVehicleDetail({ vehicle }) {
       </div>
       <div className="flex items-center p-4">
         <div className="w-full">
-          <Button
-            disabled={attachedPostShow}
-            variant="primary"
-            className="w-full"
-          >
-            Đăng bán
-          </Button>
+          <Link to={`/create-post`}>
+            <Button
+              disabled={attachedPostShow}
+              variant="primary"
+              className="w-full"
+            >
+              Đăng bán
+            </Button>
+          </Link>
           <Link to={`/vehicle/update/${vehicle.id}`} state={{ vehicle }}>
-            <Button variant="secondary" className="w-full">
+            <Button
+              disabled={attachedPostShow}
+              variant="secondary"
+              className="w-full"
+            >
               Chỉnh sửa
             </Button>
           </Link>
@@ -80,7 +87,7 @@ function MenuVehicleDetail({ vehicle }) {
           >
             <Box sx={style}>
               <ConfirmDelete
-                resourceName="tài sản"
+                resourceName="ô tô"
                 disabled={isPending}
                 onCloseModal={handleOnCloseDelete}
                 onConfirm={() => handleOnConfirm()}

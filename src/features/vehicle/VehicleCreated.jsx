@@ -11,7 +11,7 @@ import VehicleCreatedForm from "./VehicleCreatedForm";
 
 function VehicleCreated() {
   const { state } = useLocation();
-  const draft = state?.draft || state?.asset || {};
+  const draft = state?.draft || state?.vehicle || {};
 
   const {
     properties = {},
@@ -47,6 +47,7 @@ function VehicleCreated() {
       },
     },
   });
+  
   const navigate = useNavigate();
   const { isPending, createVehicle } = useCreateVehicle();
 

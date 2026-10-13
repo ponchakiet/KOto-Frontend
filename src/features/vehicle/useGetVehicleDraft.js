@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getVehiclesDraft } from "../../services/VehicleService";
 
-function useGetAssetDraft() {
+function useGetVehicleDraft() {
   const { isLoading, data: drafts } = useQuery({
     queryKey: ["draft"],
     queryFn: () => getVehiclesDraft(),
@@ -11,4 +11,4 @@ function useGetAssetDraft() {
   return { isLoading, drafts };
 }
 
-export default useGetAssetDraft;
+export default useGetVehicleDraft;

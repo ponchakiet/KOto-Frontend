@@ -7,11 +7,11 @@ function PostList({ type, data, totalElements }) {
   return (
     <div>
       <div className="grid grid-cols-5 place-items-center border-t-gray-200 border-t-2 py-8">
-        {data.map((item) => (
-          <VehicleCard key={item.id} vehicle={item} />
+        {data.slice(0, 5).map((item) => (
+          <VehicleCard key={item.id} post={item} />
         ))}
       </div>
-      {totalElements > 5 && (
+      {totalElements > 5 && ( 
         <div className="py-5 flex justify-center">
           <Button onClick={() => navigate(`/search?type=${type}`)}>
             Xem thêm tin khác
